@@ -17,7 +17,7 @@ pub fn autocontext(_attr: TokenStream, item: TokenStream) -> TokenStream {
             let result = (|| -> anyhow::Result<_> { #fn_body })();
             match result {
                 Ok(val) => Ok(val),
-                Err(e) => Err(anyhow::anyhow!(e).context(format!("Error occurred in file: '{}', line: {}", file!(), line!()))),
+                Err(e) => Err(anyhow::anyhow!(e).context(format!("Error occurred in function at {}:{}", file!(), line!() + 1))),
             }
         }
     };
